@@ -1,0 +1,17 @@
+*.ncb
+*.aps
+*.user
+*debug/
+*release/
+*.xlsx
+*.suo
+*.7z
+*.rar
+*.zip
+*.psd
+*.log
+*.DAT
+*.old
+*x64/
+_*.*
+*.png

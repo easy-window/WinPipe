@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PipeMain", "PipeMain\PipeMain.vcproj", "{505327CA-CB55-4C51-93A4-78C6F57D1C5B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PipeFrom", "PipeFrom\PipeFrom.vcproj", "{2B6E553E-C5F8-4C9B-8867-439CCDC90CAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{505327CA-CB55-4C51-93A4-78C6F57D1C5B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{505327CA-CB55-4C51-93A4-78C6F57D1C5B}.Debug|Win32.Build.0 = Debug|Win32
+		{505327CA-CB55-4C51-93A4-78C6F57D1C5B}.Release|Win32.ActiveCfg = Release|Win32
+		{505327CA-CB55-4C51-93A4-78C6F57D1C5B}.Release|Win32.Build.0 = Release|Win32
+		{2B6E553E-C5F8-4C9B-8867-439CCDC90CAB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2B6E553E-C5F8-4C9B-8867-439CCDC90CAB}.Debug|Win32.Build.0 = Debug|Win32
+		{2B6E553E-C5F8-4C9B-8867-439CCDC90CAB}.Release|Win32.ActiveCfg = Release|Win32
+		{2B6E553E-C5F8-4C9B-8867-439CCDC90CAB}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
