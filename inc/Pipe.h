@@ -11,6 +11,7 @@ public:
 
 	int Create(LPCWSTR lpName, int nBuffSize);
 	int Connect(LPCWSTR lpName);
+	bool IsOpen();
 	int Close(void);
 	int Send(void* Buffer, int nSize);
 	int SetRecvCallback(RECVCALLBACK callback, LPVOID lpParam);

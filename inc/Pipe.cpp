@@ -33,7 +33,7 @@ CPipe::~CPipe(void)
 int CPipe::Create(LPCWSTR lpName, int nBuffSize)
 {
 	if (!lpName || nBuffSize <= 0) return 1;
-	m_hPipe = CreateNamedPipe( 
+	HANDLE hPipe = CreateNamedPipe( 
 		lpName,             
 		PIPE_ACCESS_DUPLEX | FILE_FLAG_OVERLAPPED,       
 		PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT, 
@@ -43,11 +43,12 @@ int CPipe::Create(LPCWSTR lpName, int nBuffSize)
 		0,
 		NULL);            
 
-	if (m_hPipe==INVALID_HANDLE_VALUE)
+	if (hPipe==INVALID_HANDLE_VALUE)
 	{
 		return GetLastError();
 	}
 
+	m_hPipe = hPipe;
 	_tcscpy(m_szPipeName, lpName);
 	m_nBuffSize = nBuffSize;
 	m_bLoop = true;
@@ -57,13 +58,14 @@ int CPipe::Create(LPCWSTR lpName, int nBuffSize)
 
 int CPipe::Connect(LPCWSTR lpName)
 {
+	if (!lpName) return 1;
 	if (!WaitNamedPipe(lpName, NMPWAIT_USE_DEFAULT_WAIT))
 	{
 		TRACE0("No Read Pipe Accessible");
 		return 1;  
 	}  
 
-	m_hPipe = CreateFile(
+	HANDLE hPipe = CreateFile(
 		lpName, 
 		GENERIC_READ | GENERIC_WRITE,
 		FILE_SHARE_READ | FILE_SHARE_WRITE,
@@ -72,14 +74,20 @@ int CPipe::Connect(LPCWSTR lpName)
 		0,
 		NULL);
 
-	if (m_hPipe == INVALID_HANDLE_VALUE)
+	if (hPipe == INVALID_HANDLE_VALUE)
 	{
 		DWORD dwError = GetLastError();
 		if (ERROR_BROKEN_PIPE == dwError) return 2;
 		TRACE1("Open Read Pipe Failed! Error:%d\n", dwError);
 		return dwError;
 	}
+	m_hPipe = hPipe;
 	return 0;
+}
+
+bool CPipe::IsOpen()
+{
+	return m_hPipe != INVALID_HANDLE_VALUE;
 }
 
 int CPipe::Close(void)
@@ -97,6 +105,8 @@ int CPipe::Close(void)
 
 int CPipe::Send(void* Buffer, int nSize)
 {
+	if (NULL == Buffer || nSize <= 0 || INVALID_HANDLE_VALUE == m_hPipe) 
+		return 1;
 	DWORD dwReturn = 0;
 	if (!WriteFile(m_hPipe, Buffer, nSize, &dwReturn, NULL))
 	{
@@ -137,7 +147,9 @@ UINT CPipe::PipiRecvThread(LPVOID lpParam)
 		);
 
 		ConnectNamedPipe(pMain->m_hPipe, &overlapped);
-		while(pMain->m_bLoop && WAIT_OBJECT_0 != WaitForSingleObject(overlapped.hEvent, 0)) Sleep(1000);
+		while(pMain->m_bLoop 
+			&& WAIT_OBJECT_0 != WaitForSingleObject(overlapped.hEvent, 0)) 
+			Sleep(1000);
 
 		DWORD dwEvtMask = 0;
 		GetCommMask(pMain->m_hPipe, &dwEvtMask);

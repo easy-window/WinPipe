@@ -262,11 +262,11 @@
 			Name="pipe"
 			>
 			<File
-				RelativePath="..\pipe\Pipe.cpp"
+				RelativePath="..\..\inc\Pipe.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\pipe\Pipe.h"
+				RelativePath="..\..\inc\Pipe.h"
 				>
 			</File>
 		</Filter>
